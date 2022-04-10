@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './StartBox.scss'
 import Button from '../../components/Button/Button'
-import RadioButtons from '../../components/RadioButtons/RadioButtons'
+import RadioButtonsStart from '../../components/RadioButtonsStart/RadioButtonsStart'
 
 export default function StartBox({ quizzes, setRunningQuiz }) {
   const [selectedQuiz, setSelectedQuiz] = useState()
@@ -12,7 +12,7 @@ export default function StartBox({ quizzes, setRunningQuiz }) {
     <div className="start-box">
       <h2>Choose your Quiz</h2>
       <div className="quizzes">
-        <RadioButtons quizzes={quizzes} setSelectedQuiz={setSelectedQuiz} />
+        <RadioButtonsStart quizzes={quizzes} setSelectedQuiz={setSelectedQuiz} />
       </div>
       <div className="btn">
         <Button name={'Start'} onClick={startQuiz} isDisabled={!selectedQuiz} />

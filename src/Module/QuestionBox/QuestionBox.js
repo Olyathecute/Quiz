@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
 import './QuestionBox.scss'
 import Checkbox from '../../components/Checkbox/Checkbox'
-import Area from '../../components/Area/Area'
 import Match from '../../components/Match/Match'
-import Button from '../../components/Button/Button'
 import RadioButtons from '../../components/RadioButtons/RadioButtons'
+import Button from '../../components/Button/Button'
+import Area from '../../components/Area/Area'
+
+const selectQuestionComponent = type => {
+  switch (type) {
+    case 'match':
+      return Match
+    case 'chooseOne':
+      return RadioButtons
+    case 'chooseMany':
+      return Checkbox
+  }
+}
 
 export default function QuestionBox({
   question,
@@ -15,8 +26,7 @@ export default function QuestionBox({
   disabledClick,
   setDisabledClick
 }) {
-  const QuestionComponent =
-    question.type !== 'match' ? (question.type === 'chooseOne' ? RadioButtons : Checkbox) : Match
+  const QuestionComponent = selectQuestionComponent(question.type)
 
   const changeAndAddAnswer = () => {
     let rightViewAnswer = userAnswer
@@ -24,9 +34,6 @@ export default function QuestionBox({
       rightViewAnswer = Object.entries(userAnswer).map(([answer, verity]) => {
         if (verity) return answer
       })
-    }
-    if (question.type === 'chooseOne') {
-      rightViewAnswer = Object.keys(userAnswer).join('')
     }
     setResults([...results, rightViewAnswer])
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import './QuizBox.scss'
 import QuestionBox from '../QuestionBox/QuestionBox'
