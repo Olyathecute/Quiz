@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import './QuizBox.scss'
 import QuestionBox from '../QuestionBox/QuestionBox'
 import Button from '../../components/Button/Button'
+import ResponseBox from '../ResponseBox/ResponseBox'
 
 export default function QuizBox({ quiz, restart }) {
   const [results, setResults] = useState([]) // contains list of object with userAnswer, score, info about question (text, answer, value, type)
@@ -12,7 +13,31 @@ export default function QuizBox({ quiz, restart }) {
 
   console.log(results)
 
-  const goNextQuestion = userAnswer => {}
+  const goNextQuestion = async (answer, question) => {
+    console.log(quiz.id, '1')
+    console.log(question.id, '2')
+    console.log(answer, '3')
+
+    const response = await fetch('http://localhost:7777/answer', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ quizId: quiz.id, questionId: question.id, answer: answer })
+    }).then(res => res.json())
+
+    console.log(response)
+
+    const newResult = {
+      userAnswer: answer,
+      rightAnswer: response.answer,
+      score: response.score,
+      questionInfo: question
+    }
+
+    setResults([...results, newResult])
+    if (response.next !== null) setCurrentQuestion(response.next)
+  }
 
   const { isLoading, error, data } = useQuery(
     'repoDataQuiz',
@@ -33,21 +58,26 @@ export default function QuizBox({ quiz, restart }) {
     )
 
   return (
-    <div className="quiz-box">
-      <div className="header">
-        <Button name={'Start page'} isDisabled={false} onClick={restart} />
-        {currentQuestion.id + 1}/{quiz.questionsCount}
-      </div>
+    <>
+      {results.length === quiz.questionsCount ? (
+        <ResponseBox results={results} restart={restart} />
+      ) : (
+        <div className="quiz-box">
+          <div className="header">
+            <Button name={'Start page'} isDisabled={false} onClick={restart} />
+            {currentQuestion.id + 1}/{quiz.questionsCount}
+          </div>
 
-      <QuestionBox
-        question={currentQuestion}
-        userAnswer={userAnswer}
-        setUserAnswer={setUserAnswer}
-        results={results}
-        setResults={setResults}
-        setDisabledClick={setDisabledClick}
-        disabledClick={disabledClick}
-      />
-    </div>
+          <QuestionBox
+            question={currentQuestion}
+            userAnswer={userAnswer}
+            setUserAnswer={setUserAnswer}
+            setDisabledClick={setDisabledClick}
+            disabledClick={disabledClick}
+            goNextQuestion={goNextQuestion}
+          />
+        </div>
+      )}
+    </>
   )
 }

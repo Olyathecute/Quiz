@@ -1,12 +1,20 @@
 import React from 'react'
 import './Response.scss'
 
-export default function Response(props) {
+export default function Response({ results }) {
+  console.log(results, 'results')
+
   return (
-    <div className="response">
-      <div>{props.text}</div>
-      <div className="right">{props.text}</div>
-      <div className="wrong">{props.text}</div>
-    </div>
+    <>
+      {results.map((question, index) => {
+        return (
+          <div className="response" key={index}>
+            <div>{question.questionInfo.text}</div>
+            <div className="right">{question.rightAnswer}</div>
+            {question.score === 0 ? <div className="wrong">{question.userAnswer}</div> : null}
+          </div>
+        )
+      })}
+    </>
   )
 }

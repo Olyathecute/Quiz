@@ -13,10 +13,11 @@ export default function Checkbox({ question, userAnswer, setUserAnswer, setDisab
     <div className="checkbox-wrapper">
       <div className="checkbox-column">
         {question.choices.map((item, index) => {
+          const id = `checkbox${index}_${question.id}`
           return (
-            <div className="checkbox" key={index}>
-              <input id={`checkbox${index}`} type="checkbox" onChange={handleChange} value={item}></input>
-              <label htmlFor={`checkbox${index}`}>
+            <div className="checkbox" key={id}>
+              <input id={id} type="checkbox" onChange={handleChange} value={item}></input>
+              <label htmlFor={id}>
                 {index + 1}.&nbsp;{item}
               </label>
             </div>

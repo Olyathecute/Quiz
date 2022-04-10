@@ -21,21 +21,22 @@ export default function QuestionBox({
   question,
   userAnswer,
   setUserAnswer,
-  results,
-  setResults,
   disabledClick,
-  setDisabledClick
+  setDisabledClick,
+  goNextQuestion
 }) {
   const QuestionComponent = selectQuestionComponent(question.type)
 
   const changeAndAddAnswer = () => {
+    console.log(question, 'question')
     let rightViewAnswer = userAnswer
     if (question.type === 'chooseMany') {
       rightViewAnswer = Object.entries(userAnswer).map(([answer, verity]) => {
         if (verity) return answer
       })
     }
-    setResults([...results, rightViewAnswer])
+
+    goNextQuestion(rightViewAnswer, question)
   }
 
   return (

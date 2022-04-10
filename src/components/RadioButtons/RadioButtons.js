@@ -11,11 +11,12 @@ export default function RadioButtons({ question, setUserAnswer, setDisabledClick
     <>
       <div className="radio-btn-wrapper">
         <div className="radio-btn-column">
-          {question.choices.map((item, index) => {
+          {question.choices.map((choice, index) => {
+            const id = `radio${index}_${question.id}`
             return (
-              <div className="radio-btn" key={index}>
-                <input id={`radio${index}`} type="radio" onChange={handleChange} value={item} name="group"></input>
-                <label htmlFor={`radio${index}`}>{item}</label>
+              <div className="radio-btn" key={id}>
+                <input id={id} type="radio" onChange={handleChange} value={choice} name="group"></input>
+                <label htmlFor={id}>{choice}</label>
               </div>
             )
           })}
