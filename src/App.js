@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
+import QuizBox from './Module/QuizBox/QuizBox'
+import ResponseBox from './Module/ResponseBox/ResponseBox'
+import StartBox from './Module/StartBox/StartBox'
+import './index.scss'
 
-function App() {
+export default function App() {
+  const [runningQuiz, setRunningQuiz] = useState()
+  // const [allAnswers, setAllAnswers] = useState({}) // сохранение всех ответов
+
+  const {
+    isLoading,
+    error,
+    data: quizzes
+  } = useQuery('repoData', () => fetch('http://localhost:7777/all').then(response => response.json()))
+
+  if (isLoading)
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>
+    )
+  if (error)
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        An error has occurred: {error.message}
+      </div>
+    )
+
+  // console.log(data, 'data')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      {runningQuiz ? (
+        <QuizBox quiz={runningQuiz} restart={() => setRunningQuiz(null)} />
+      ) : (
+        <StartBox quizzes={quizzes} setRunningQuiz={setRunningQuiz} />
+      )}
+      {/* <ResponseBox data={data} /> */}
+    </>
+  )
 }
-
-export default App;

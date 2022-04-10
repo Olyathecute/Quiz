@@ -1,0 +1,18 @@
+.start-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  width: 100%;
+
+  .quizzes {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .btn {
+    margin: 20px auto;
+  }
+}

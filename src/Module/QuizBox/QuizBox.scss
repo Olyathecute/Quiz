@@ -1,0 +1,21 @@
+@import '../../index.scss';
+
+.quiz-box {
+  width: 100%;
+  position: relative;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px 0 40px;
+  }
+}
+
+.error-box {
+  @include error;
+}
+
+.loader {
+  @include loader;
+}

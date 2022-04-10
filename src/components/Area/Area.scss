@@ -1,0 +1,8 @@
+@import '../../index.scss';
+
+.area {
+  @include standard-block;
+  margin: 0 auto;
+  border: 1px solid $blockDarkColor;
+  width: 50%;
+}

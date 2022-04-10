@@ -1,0 +1,16 @@
+@import '../../index.scss';
+
+.response {
+  margin: 10px auto;
+  @include standard-block;
+  width: 50%;
+
+  .right {
+    padding-top: 10px;
+    color: $green;
+  }
+
+  .wrong {
+    color: $red;
+  }
+}

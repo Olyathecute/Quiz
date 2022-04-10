@@ -1,0 +1,24 @@
+@import '../../index.scss';
+
+.button {
+  @include standard-block;
+  cursor: pointer;
+  font: $font;
+  box-shadow: 0 4px 4px $shadowColor;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+
+  &:hover {
+    background: $blockDarkColor;
+  }
+
+  &:active {
+    box-shadow: inset 0px 4px 4px $shadowColor;
+  }
+
+  &:disabled {
+    box-shadow: none;
+    background-color: $blockColor;
+  }
+}

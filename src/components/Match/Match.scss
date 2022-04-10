@@ -1,0 +1,64 @@
+@import '../../index.scss';
+
+@mixin block {
+  background-color: $blockColor;
+  border-radius: 40px;
+  min-height: 44px;
+  min-width: 300px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+@mixin flexMixin {
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-box {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px;
+
+  .left-part,
+  .empty-part {
+    @include flexMixin;
+    justify-content: space-between;
+    min-height: 150px;
+  }
+}
+
+.right-part {
+  @include flexMixin;
+  align-items: center;
+  min-height: 160px;
+}
+
+.right-part-box {
+  @include flexMixin;
+  align-items: center;
+  width: 300px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+.match {
+  @include block;
+  box-shadow: 0 4px 4px $shadowColor;
+}
+
+.cell {
+  @include block;
+}
+
+.fill {
+  background-color: $blockDarkColor;
+  border-radius: 40px;
+}
+
+.answer {
+  box-shadow: 0 4px 4px $shadowColor;
+}

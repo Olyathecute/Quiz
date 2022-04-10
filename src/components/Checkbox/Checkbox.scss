@@ -1,0 +1,45 @@
+@import '../../index.scss';
+
+.checkbox-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+
+.checkbox-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox {
+  margin: 0 auto;
+  width: 400px;
+  text-align: left;
+
+  label {
+    display: block;
+    margin: 10px;
+    @include standard-block;
+    box-shadow: 0 4px 4px $shadowColor;
+    cursor: pointer;
+  }
+
+  input[type='checkbox'] {
+    position: absolute;
+    width: 0;
+    height: 0;
+
+    &:checked + label {
+      background: $blockDarkColor;
+      box-shadow: inset 0px 4px 4px $shadowColor;
+    }
+  }
+}
+
+.picture {
+  width: 400px;
+  height: auto;
+
+  border: 2px solid $blockDarkColor;
+  border-radius: 40px;
+}
