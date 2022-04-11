@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './RadioButtons.scss'
 
 export default function RadioButtons({ question, setUserAnswer, setDisabledClick }) {
+  useEffect(() => {
+    console.log(question, 'new component')
+  }, [])
+
   const handleChange = event => {
     setUserAnswer(event.target.value)
     setDisabledClick(false)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import './Match.scss'
 
@@ -8,48 +8,57 @@ import './Match.scss'
 // }
 
 export default function Match({ question, userAnswer, setUserAnswer, setDisabledClick }) {
+  console.log(question, 'question')
+  console.log(question.id, 'questionId')
+  console.log(question.choiceRight, 'question.choiceRight')
+
+  useEffect(() => {
+    console.log(question, 'new component')
+  }, [])
+
   const initCurrentCell = Array(question.choiceRight.length)
     .fill(0)
-    .reduce((acc, _, index) => ((acc[`ans-${index + 1}`] = null), acc), {})
+    .reduce((acc, _, index) => ((acc[`ans-${question.id}-${index}`] = null), acc), {}) // filling empty cell
 
-  const [currentCell, setCurrentCell] = useState(initCurrentCell)
+  const [currentCell, setCurrentCell] = useState(initCurrentCell) // cell for answers
+  console.log(currentCell, 'currentCell')
 
-  const initList = question.choiceRight.map((value, index) => ({ value, id: `list-${index}` }))
-  const [list, setList] = useState(initList)
+  const initList = question.choiceRight.map((value, index) => ({ value, id: `list-${question.id}-${index}` })) // filling answers
+  const [list, setList] = useState(initList) // answers in list
+  console.log(list, 'list')
 
   const handleOnDragEnd = result => {
+    console.log(result, 'result')
+
     const dropTo = result.destination?.droppableId
+    console.log(dropTo, 'dropTo')
     const dropFrom = result.source.droppableId
 
     const draggedValue = dropFrom === 'list' ? list.find(item => item.id === result.draggableId) : currentCell[dropFrom]
 
-    const answerValue = list.find(item => item.id === result.draggableId)?.value
-    const answerItemToCurrent = dropTo.slice(-1)
-    const answerItemToList = dropFrom.slice(-1)
-
     if (dropTo === 'list') {
       if (dropFrom === dropTo) {
-        //  из листа в лист
+        //  from list to list
         const items = Array.from(list)
         const [reorderedItem] = items.splice(result.source.index, 1)
         items.splice(result.destination.index, 0, reorderedItem)
 
         setList([...items])
       } else {
-        //  из ответов в лист
+        //  from answers to list
         list.splice(result.destination.index, 0, currentCell[dropFrom])
         currentCell[dropFrom] = null
 
         setCurrentCell({ ...currentCell })
         setList([...list])
-        setUserAnswer({ ...userAnswer, [answerItemToList]: null }) // update userAnswer
+        setUserAnswer({ ...userAnswer, [question.choiceLeft[dropFrom.split('-')[2]]]: null }) // update userAnswer
       }
 
-      if (!list.length) setDisabledClick(false) // проверка заполненности ответа
+      if (!list.length) setDisabledClick(false) // check answer is full
       else setDisabledClick(true)
     } else {
       if (dropFrom === 'list') {
-        // из листа в список
+        // from list to answers
         if (currentCell[dropTo] !== null) return
 
         currentCell[dropTo] = draggedValue
@@ -57,9 +66,9 @@ export default function Match({ question, userAnswer, setUserAnswer, setDisabled
         list.splice(index, 1)
         setList([...list])
       } else {
-        // в список из списка
+        // from answers to answers
         if (!dropTo) {
-          // если ни туда, ни сюда - в лист
+          // just draggable -> to list
           list.push(currentCell[dropFrom])
           currentCell[dropFrom] = null
           setList([...list])
@@ -69,13 +78,17 @@ export default function Match({ question, userAnswer, setUserAnswer, setDisabled
           currentCell[dropTo] = temp
         }
       }
+      console.log(dropTo.split('-')[2], 'куда')
+      console.log(question, 'question')
+      console.log(draggedValue, 'что')
 
       setCurrentCell({ ...currentCell })
-      setUserAnswer({ ...userAnswer, [answerItemToCurrent]: answerValue })
+      setUserAnswer({ ...userAnswer, [question.choiceLeft[dropTo.split('-')[2]]]: draggedValue.value })
       if (!list.length) setDisabledClick(false)
       else setDisabledClick(true)
     }
   }
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className="answer-box">
@@ -83,7 +96,7 @@ export default function Match({ question, userAnswer, setUserAnswer, setDisabled
           {question.choiceLeft.map((item, index) => {
             return (
               <div key={index} className="match">
-                {index + 1}.&nbsp;{item}
+                &nbsp;{item}
               </div>
             )
           })}

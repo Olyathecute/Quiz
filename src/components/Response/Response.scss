@@ -1,16 +1,31 @@
 @import '../../index.scss';
 
 .response {
-  margin: 10px auto;
   @include standard-block;
+  margin: 10px auto;
   width: 50%;
 
+  .question {
+    text-align: center;
+    padding-bottom: 5px;
+  }
+
   .right {
-    padding-top: 10px;
     color: $green;
+
+    .right-chooseOne,
+    .right-chooseMany {
+      display: inline;
+    }
   }
 
   .wrong {
+    padding-top: 5px;
     color: $red;
+
+    .wrong-chooseOne,
+    .wrong-chooseMany {
+      display: inline;
+    }
   }
 }

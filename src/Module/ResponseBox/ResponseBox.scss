@@ -1,11 +1,16 @@
 .response-box {
-  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  .btn {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 20px 40px 0 40px;
+  }
 }
 
 .results {
   position: relative;
-  text-align: center;
 }

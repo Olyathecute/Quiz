@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Checkbox.scss'
 
 export default function Checkbox({ question, userAnswer, setUserAnswer, setDisabledClick }) {
+  useEffect(() => {
+    console.log(question, 'new component')
+  }, [])
+
   const handleChange = ({ target }) => {
     setUserAnswer({ ...userAnswer, [target.value]: target.checked })
 
     if (Object.values({ ...userAnswer, [target.value]: target.checked }).indexOf(true) !== -1) setDisabledClick(false)
     else setDisabledClick(true)
+
+    console.log(userAnswer, 'userAnswer Check')
   }
 
   return (
@@ -17,9 +23,7 @@ export default function Checkbox({ question, userAnswer, setUserAnswer, setDisab
           return (
             <div className="checkbox" key={id}>
               <input id={id} type="checkbox" onChange={handleChange} value={item}></input>
-              <label htmlFor={id}>
-                {index + 1}.&nbsp;{item}
-              </label>
+              <label htmlFor={id}>{item}</label>
             </div>
           )
         })}

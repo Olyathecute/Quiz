@@ -28,14 +28,13 @@ export default function QuestionBox({
   const QuestionComponent = selectQuestionComponent(question.type)
 
   const changeAndAddAnswer = () => {
-    console.log(question, 'question')
     let rightViewAnswer = userAnswer
     if (question.type === 'chooseMany') {
-      rightViewAnswer = Object.entries(userAnswer).map(([answer, verity]) => {
-        if (verity) return answer
-      })
+      rightViewAnswer = Object.entries(userAnswer)
+        .map(([answer, selected]) => selected && answer)
+        .filter(Boolean)
     }
-
+    // setUserAnswer(null)
     goNextQuestion(rightViewAnswer, question)
   }
 
@@ -44,6 +43,7 @@ export default function QuestionBox({
       <div className="question">
         <Area text={question.text} />
         <QuestionComponent
+          key={question.id}
           question={question}
           setUserAnswer={setUserAnswer}
           userAnswer={userAnswer}

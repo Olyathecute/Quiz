@@ -11,13 +11,9 @@ export default function QuizBox({ quiz, restart }) {
   const [userAnswer, setUserAnswer] = useState()
   const [disabledClick, setDisabledClick] = useState(true)
 
-  console.log(results)
+  console.log(results, 'results Quiz')
 
   const goNextQuestion = async (answer, question) => {
-    console.log(quiz.id, '1')
-    console.log(question.id, '2')
-    console.log(answer, '3')
-
     const response = await fetch('http://localhost:7777/answer', {
       headers: {
         'Content-Type': 'application/json'
@@ -25,8 +21,6 @@ export default function QuizBox({ quiz, restart }) {
       method: 'POST',
       body: JSON.stringify({ quizId: quiz.id, questionId: question.id, answer: answer })
     }).then(res => res.json())
-
-    console.log(response)
 
     const newResult = {
       userAnswer: answer,
@@ -36,6 +30,7 @@ export default function QuizBox({ quiz, restart }) {
     }
 
     setResults([...results, newResult])
+    setUserAnswer(null)
     if (response.next !== null) setCurrentQuestion(response.next)
   }
 
@@ -72,8 +67,8 @@ export default function QuizBox({ quiz, restart }) {
             question={currentQuestion}
             userAnswer={userAnswer}
             setUserAnswer={setUserAnswer}
-            setDisabledClick={setDisabledClick}
             disabledClick={disabledClick}
+            setDisabledClick={setDisabledClick}
             goNextQuestion={goNextQuestion}
           />
         </div>

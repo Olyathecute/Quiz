@@ -15,7 +15,9 @@ export default function ResponseBox({ results, restart }) {
   )
   return (
     <div className="response-box">
-      <Button name={'New Quiz'} onClick={restart} />
+      <div className="btn">
+        <Button name={'New Quiz'} onClick={restart} />
+      </div>
       <div className="results">
         <Area text={`Ваш результат: ${collectedPoints}/${maxPoints}`} />
         <Response results={results} />
