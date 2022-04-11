@@ -1,18 +1,18 @@
 @import '../../index.scss';
 
 .quiz-box {
-  width: 100%;
   position: relative;
+  margin: 0 30px;
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px 0 40px;
+    padding: 20px 40px;
   }
 }
 
-.error-box {
+.error {
   @include error;
 }
 

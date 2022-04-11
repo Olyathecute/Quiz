@@ -4,6 +4,8 @@ import './QuizBox.scss'
 import QuestionBox from '../QuestionBox/QuestionBox'
 import Button from '../../components/Button/Button'
 import ResponseBox from '../ResponseBox/ResponseBox'
+import axios from 'axios'
+import { URL } from '../../index'
 
 export default function QuizBox({ quiz, restart }) {
   const [results, setResults] = useState([]) // contains list of object with userAnswer, score, info about question (text, answer, value, type)
@@ -11,16 +13,12 @@ export default function QuizBox({ quiz, restart }) {
   const [userAnswer, setUserAnswer] = useState()
   const [disabledClick, setDisabledClick] = useState(true)
 
-  console.log(results, 'results Quiz')
-
   const goNextQuestion = async (answer, question) => {
-    const response = await fetch('http://localhost:7777/answer', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({ quizId: quiz.id, questionId: question.id, answer: answer })
-    }).then(res => res.json())
+    const { data: response } = await axios.post(`${URL}/answer`, {
+      quizId: quiz.id,
+      questionId: question.id,
+      answer: answer
+    })
 
     const newResult = {
       userAnswer: answer,
@@ -34,20 +32,20 @@ export default function QuizBox({ quiz, restart }) {
     if (response.next !== null) setCurrentQuestion(response.next)
   }
 
-  const { isLoading, error, data } = useQuery(
+  const { isLoading, error } = useQuery(
     'repoDataQuiz',
-    () => fetch(`http://localhost:7777/start/${quiz.id}`).then(response => response.json()),
+    () => axios.get(`${URL}/start/${quiz.id}`).then(({ data }) => data),
     {
       onSuccess: data => setCurrentQuestion(data),
       refetchOnWindowFocus: false
     }
   )
 
-  if (error) return <div className="error-box">An error has occurred: {error.message}</div>
+  if (error) return <div className="error">An error has occurred: {error.message}</div>
 
   if (isLoading || !currentQuestion)
     return (
-      <div className="error-box">
+      <div className="error">
         <div className="loader"></div>
       </div>
     )

@@ -4,10 +4,8 @@
   @include standard-block;
   cursor: pointer;
   font: $font;
-  box-shadow: 0 4px 4px $shadowColor;
   border: none;
-  padding: 10px 15px;
-  text-align: center;
+  box-shadow: 0 4px 4px $shadowColor;
 
   &:hover {
     background: $blockDarkColor;

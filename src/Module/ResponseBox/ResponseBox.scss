@@ -1,5 +1,5 @@
 .response-box {
-  width: 100%;
+  margin: 0 30px;
   display: flex;
   flex-direction: column;
 
@@ -7,10 +7,10 @@
     display: flex;
     justify-content: end;
     align-items: center;
-    padding: 20px 40px 0 40px;
+    padding: 20px 40px;
   }
-}
 
-.results {
-  position: relative;
+  .results {
+    position: relative;
+  }
 }

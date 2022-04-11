@@ -17,10 +17,50 @@ body {
   user-select: none;
 }
 
+::-webkit-scrollbar {
+  width: 15px;
+  background-color: $backgroundColor;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $blockColor;
+  border-radius: 10px;
+}
+
 @mixin standard-block {
   background-color: $blockColor;
   border-radius: 40px;
   padding: 10px 20px;
+}
+
+@mixin item {
+  min-width: 380px;
+
+  label {
+    @include standard-block;
+    margin: 10px;
+    box-shadow: 0 4px 4px $shadowColor;
+    display: block;
+    cursor: pointer;
+  }
+
+  input {
+    position: absolute;
+    width: 0;
+    height: 0;
+
+    &:checked + label {
+      background: $blockDarkColor;
+      box-shadow: inset 0px 4px 4px $shadowColor;
+    }
+  }
+}
+
+@mixin picture {
+  width: 400px;
+  height: auto;
+  border: 2px solid $blockDarkColor;
+  border-radius: 40px;
 }
 
 @mixin error {
@@ -45,5 +85,13 @@ body {
     100% {
       transform: rotate(360deg);
     }
+  }
+}
+
+.error {
+  @include error;
+
+  .loader {
+    @include loader;
   }
 }

@@ -5,14 +5,13 @@
   border-radius: 40px;
   min-height: 44px;
   min-width: 300px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
 }
 
-@mixin flexMixin {
+@mixin flex {
   display: flex;
   flex-direction: column;
 }
@@ -24,27 +23,28 @@
 
   .left-part,
   .empty-part {
-    @include flexMixin;
+    @include flex;
     justify-content: space-between;
     min-height: 150px;
   }
 }
 
 .right-part {
-  @include flexMixin;
+  @include flex;
   align-items: center;
   min-height: 160px;
-}
 
-.right-part-box {
-  @include flexMixin;
-  align-items: center;
-  width: 300px;
+  .right-part-box {
+    @include flex;
+    align-items: center;
+    width: 300px;
+  }
 }
 
 .hidden {
   visibility: hidden;
 }
+
 .match {
   @include block;
   box-shadow: 0 4px 4px $shadowColor;

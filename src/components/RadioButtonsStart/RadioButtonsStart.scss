@@ -1,23 +1,6 @@
 @import '../../index.scss';
 
-.radio-btn {
+.radio-btn-start {
   margin: 0 auto;
-  width: 300px;
-
-  label {
-    @include standard-block;
-    display: block;
-    box-shadow: 0 4px 4px $shadowColor;
-    cursor: pointer;
-  }
-
-  input[type='radio'] {
-    width: 0;
-    height: 0;
-
-    &:checked + label {
-      background: #1ba088;
-      box-shadow: inset 0px 4px 4px $shadowColor;
-    }
-  }
+  @include item;
 }

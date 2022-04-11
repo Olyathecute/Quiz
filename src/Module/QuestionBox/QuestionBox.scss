@@ -5,8 +5,9 @@
     text-align: center;
   }
 
-  .btn-next {
-    position: absolute;
-    right: 10%;
+  .btn {
+    display: flex;
+    justify-content: end;
+    padding: 20px 40px;
   }
 }

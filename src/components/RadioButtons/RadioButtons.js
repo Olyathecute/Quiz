@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './RadioButtons.scss'
 
 export default function RadioButtons({ question, setUserAnswer, setDisabledClick }) {
-  useEffect(() => {
-    console.log(question, 'new component')
-  }, [])
-
   const handleChange = event => {
     setUserAnswer(event.target.value)
     setDisabledClick(false)
@@ -14,7 +10,7 @@ export default function RadioButtons({ question, setUserAnswer, setDisabledClick
   return (
     <>
       <div className="radio-btn-wrapper">
-        <div className="radio-btn-column">
+        <div className="column">
           {question.choices.map((choice, index) => {
             const id = `radio${index}_${question.id}`
             return (
@@ -25,7 +21,7 @@ export default function RadioButtons({ question, setUserAnswer, setDisabledClick
             )
           })}
         </div>
-        {question.picture ? <img src={question.picture} className="picture" /> : null}
+        {question.picture ? <img src={question.picture} className="picture" alt={question.text} /> : null}
       </div>
     </>
   )

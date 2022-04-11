@@ -50,6 +50,7 @@ const getScore = (question, answer) => {
   switch (question.type) {
     case 'chooseOne': {
       if (typeof answer !== 'string') throw new Error('answer should be a string for chooseOne')
+
       return question.answer === answer ? question.value : 0
     }
     case 'chooseMany': {
@@ -70,7 +71,6 @@ const getScore = (question, answer) => {
       for (let [left, right] of Object.entries(answer)) {
         if (question.answer[left] === right) score += oneValue
         else if (question.strict) return 0
-        else score -= oneValue
       }
       return score <= 0 || (question.strict && score !== question.value) ? 0 : score
     }

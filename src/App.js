@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
+import axios from 'axios'
 import QuizBox from './Module/QuizBox/QuizBox'
-import ResponseBox from './Module/ResponseBox/ResponseBox'
 import StartBox from './Module/StartBox/StartBox'
 import './index.scss'
+import { URL } from './index'
 
 export default function App() {
   const [runningQuiz, setRunningQuiz] = useState()
-  // const [allAnswers, setAllAnswers] = useState({}) // сохранение всех ответов
+
+  useEffect(async () => {
+    const { data } = await axios.get(`${URL}/all`)
+  }, [])
 
   const {
     isLoading,
     error,
     data: quizzes
-  } = useQuery('repoData', () => fetch('http://localhost:7777/all').then(response => response.json()))
+  } = useQuery('repoData', () => axios.get(`${URL}/all`).then(({ data }) => data))
 
   if (isLoading)
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>
-    )
-  if (error)
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        An error has occurred: {error.message}
+      <div className="error">
+        <div className="loader"></div>
       </div>
     )
-
-  // console.log(data, 'data')
+  if (error) return <div className="error">An error has occurred: {error.message}</div>
 
   return (
     <>
@@ -35,7 +34,6 @@ export default function App() {
       ) : (
         <StartBox quizzes={quizzes} setRunningQuiz={setRunningQuiz} />
       )}
-      {/* <ResponseBox data={data} /> */}
     </>
   )
 }

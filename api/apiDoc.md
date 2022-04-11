@@ -1,75 +1,79 @@
 # Basic local Quiz Api
+
 Edit quizData to create your own quizzes
 
 ## how to run
-1. npm i 
+
+1. npm i
 2. node index.js
 
 ## Base local url: http://localhost:7777
+
 <br>
 
 # API description
 
-**All Quizzes**
-----
-  Returns json data about all available quizzes.
+## **All Quizzes**
 
-* **URL**
+Returns json data about all available quizzes.
+
+- **URL**
 
   /all
 
-* **Method:**
+- **Method:**
 
   `GET`
 
+- **Success Response:**
 
-* **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** 
+  - **Code:** 200 <br />
+    **Content:**
     ```js
     [
         {
             "id": 1,
-            "name": "Квиз пример",
-            "description": "какое-то описание квиза",
-            "picture": "ссылка куда-нибудь",
+            "name": "Quiz example",
+            "description": "quiz description",
+            "picture": "something href or img",
             "questionsCount": 3
         },
         ...
     ]
     ```
- 
- **Start quiz**
-----
-  Returns first quiz question.
 
-* **URL**
+  **Start quiz**
+
+---
+
+Returns first quiz question.
+
+- **URL**
 
   /start/:id
 
-* **Method:**
+- **Method:**
 
   `GET`
-  
-*  **URL Params**
 
-   **Required:**
- 
-   `id=[integer]` - quiz id want you want to start
+- **URL Params**
 
-* **Success Response:**
+  **Required:**
 
-  * **Code:** 200 <br />
-    **Content:** 
+  `id=[integer]` - quiz id want you want to start
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
     ```js
     {
         "type": "chooseOne", // also chooseMany and match are available
-        "text": "Пример вопроса с 1 вариантом ответа",
+        "text": "Example question with 1 answer",
         "choices": [
-            "1",
-            "false",
-            "fdsa",
+            "false1",
+            "false2",
+            "false3",
             "right choice"
         ],
         "value": 1,
@@ -78,45 +82,45 @@ Edit quizData to create your own quizzes
                         // if true one mistake will result in 0 score
     }
     ```
- 
-* **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
+- **Error Response:**
 
+  - **Code:** 404 NOT FOUND <br />
 
-**Answer a question**
-----
-  return a score of an answer and the next question if such exists
+## **Answer a question**
 
-* **URL**
+return a score of an answer and the next question if such exists
+
+- **URL**
 
   /answer
 
-* **Method:**
+- **Method:**
 
   `POST`
 
-* **Body Params**
+- **Body Params**
 
   **Required:**
-    * quizId
-    * questionId
-    * answer - string for chooseOne, array of srtings for chooseMany, object for match
 
-* **Success Response:**
+  - quizId
+  - questionId
+  - answer - string for chooseOne, array of srtings for chooseMany, object for match
 
-  * **Code:** 200 <br />
-    **Content:** 
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
     ```js
     {
         "score": 0, // calculated score for sent answer
         "next": {   // next question, null if there is none
             "type": "match",
-            "text": "Пример вопроса сопоставления",
+            "text": "Example match question",
             "choiceLeft": [ // this should be key in answer object
-                "1",
-                "2",
-                "3"
+                "first",
+                "second",
+                "third"
             ],
             "choiceRight": [ // this should be value in answer object
                 "r1",
@@ -129,8 +133,8 @@ Edit quizData to create your own quizzes
         }
     }
     ```
- 
-* **Error Response:**
 
-  * **Code:** 400 BAD REQUEST <br />
-  * **Message:** some message with error description
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+  - **Message:** some message with error description

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './QuestionBox.scss'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import Match from '../../components/Match/Match'
@@ -34,8 +34,8 @@ export default function QuestionBox({
         .map(([answer, selected]) => selected && answer)
         .filter(Boolean)
     }
-    // setUserAnswer(null)
     goNextQuestion(rightViewAnswer, question)
+    setDisabledClick(true)
   }
 
   return (
@@ -50,7 +50,7 @@ export default function QuestionBox({
           setDisabledClick={setDisabledClick}
         />
       </div>
-      <div className="btn-next">
+      <div className="btn">
         <Button name={'Next'} isDisabled={disabledClick} onClick={changeAndAddAnswer} />
       </div>
     </div>

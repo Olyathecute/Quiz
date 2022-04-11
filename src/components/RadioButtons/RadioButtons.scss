@@ -4,41 +4,17 @@
   display: flex;
   justify-content: space-evenly;
   padding: 20px;
-}
 
-.radio-btn-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.radio-btn {
-  margin: 0 auto;
-  min-width: 300px;
-
-  label {
-    @include standard-block;
-    display: block;
-    margin: 10px;
-    box-shadow: 0 4px 4px $shadowColor;
-    cursor: pointer;
+  .column {
+    display: flex;
+    flex-direction: column;
   }
 
-  input[type='radio'] {
-    position: absolute;
-    width: 0;
-    height: 0;
-
-    &:checked + label {
-      background: #1ba088;
-      box-shadow: inset 0px 4px 4px $shadowColor;
-    }
+  .radio-btn {
+    @include item;
   }
-}
 
-.picture {
-  width: 400px;
-  height: auto;
-
-  border: 2px solid $blockDarkColor;
-  border-radius: 40px;
+  .picture {
+    @include picture;
+  }
 }

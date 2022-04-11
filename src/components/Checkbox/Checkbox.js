@@ -1,23 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './Checkbox.scss'
 
 export default function Checkbox({ question, userAnswer, setUserAnswer, setDisabledClick }) {
-  useEffect(() => {
-    console.log(question, 'new component')
-  }, [])
-
   const handleChange = ({ target }) => {
     setUserAnswer({ ...userAnswer, [target.value]: target.checked })
 
     if (Object.values({ ...userAnswer, [target.value]: target.checked }).indexOf(true) !== -1) setDisabledClick(false)
     else setDisabledClick(true)
-
-    console.log(userAnswer, 'userAnswer Check')
   }
 
   return (
     <div className="checkbox-wrapper">
-      <div className="checkbox-column">
+      <div className="column">
         {question.choices.map((item, index) => {
           const id = `checkbox${index}_${question.id}`
           return (
@@ -28,7 +22,7 @@ export default function Checkbox({ question, userAnswer, setUserAnswer, setDisab
           )
         })}
       </div>
-      {question.picture ? <img src={question.picture} className="picture" /> : null}
+      {question.picture ? <img src={question.picture} className="picture" alt={question.text} /> : null}
     </div>
   )
 }
