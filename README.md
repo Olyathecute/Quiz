@@ -1,4 +1,13 @@
-# Quiz with API data
+## Quiz with API data
+
+Quiz application using:
+
+- React hooks
+- react-query
+- react-beautiful-dnd
+- scss
+
+Enjoy the demo!
 
 ## How to start
 
