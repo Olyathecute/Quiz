@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './QuestionBox.scss'
 import Checkbox from '../../components/Checkbox/Checkbox'
 import Match from '../../components/Match/Match'
@@ -17,25 +17,21 @@ const selectQuestionComponent = type => {
   }
 }
 
-export default function QuestionBox({
-  question,
-  userAnswer,
-  setUserAnswer,
-  disabledClick,
-  setDisabledClick,
-  goNextQuestion
-}) {
+const formatMayAnswer = manyAnswer =>
+  Object.entries(manyAnswer)
+    .map(([answer, selected]) => selected && answer)
+    .filter(Boolean)
+
+export default function QuestionBox({ question, disabledClick, setDisabledClick, goNextQuestion }) {
+  const [userAnswer, setUserAnswer] = useState()
   const QuestionComponent = selectQuestionComponent(question.type)
 
   const changeAndAddAnswer = () => {
-    let rightViewAnswer = userAnswer
-    if (question.type === 'chooseMany') {
-      rightViewAnswer = Object.entries(userAnswer)
-        .map(([answer, selected]) => selected && answer)
-        .filter(Boolean)
-    }
+    const rightViewAnswer = question.type === 'chooseMany' ? formatMayAnswer(userAnswer) : userAnswer
+
     goNextQuestion(rightViewAnswer, question)
     setDisabledClick(true)
+    setUserAnswer(null)
   }
 
   return (

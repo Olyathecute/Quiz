@@ -9,7 +9,6 @@ import { postAnswer, getNextQuestion } from '../../requests'
 export default function QuizBox({ quiz, restart }) {
   const [results, setResults] = useState([]) // contains list of object with userAnswer, score, info about question (text, answer, value, type)
   const [currentQuestion, setCurrentQuestion] = useState()
-  const [userAnswer, setUserAnswer] = useState()
   const [disabledClick, setDisabledClick] = useState(true)
 
   const goNextQuestion = async (answer, question) => {
@@ -23,7 +22,6 @@ export default function QuizBox({ quiz, restart }) {
     }
 
     setResults([...results, newResult])
-    setUserAnswer(null)
     if (response.next !== null) setCurrentQuestion(response.next)
   }
 
@@ -54,8 +52,6 @@ export default function QuizBox({ quiz, restart }) {
 
           <QuestionBox
             question={currentQuestion}
-            userAnswer={userAnswer}
-            setUserAnswer={setUserAnswer}
             disabledClick={disabledClick}
             setDisabledClick={setDisabledClick}
             goNextQuestion={goNextQuestion}

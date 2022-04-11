@@ -5,8 +5,8 @@ export default function Checkbox({ question, userAnswer, setUserAnswer, setDisab
   const handleChange = ({ target }) => {
     setUserAnswer({ ...userAnswer, [target.value]: target.checked })
 
-    if (Object.values({ ...userAnswer, [target.value]: target.checked }).indexOf(true) !== -1) setDisabledClick(false)
-    else setDisabledClick(true)
+    const hasAnswer = target.checked || Object.values(userAnswer).find(Boolean)
+    setDisabledClick(!hasAnswer)
   }
 
   return (
