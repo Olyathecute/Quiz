@@ -4,8 +4,7 @@ import './QuizBox.scss'
 import QuestionBox from '../QuestionBox/QuestionBox'
 import Button from '../../components/Button/Button'
 import ResponseBox from '../ResponseBox/ResponseBox'
-import axios from 'axios'
-import { URL } from '../../index'
+import { postAnswer, getNextQuestion } from '../../requests'
 
 export default function QuizBox({ quiz, restart }) {
   const [results, setResults] = useState([]) // contains list of object with userAnswer, score, info about question (text, answer, value, type)
@@ -14,11 +13,7 @@ export default function QuizBox({ quiz, restart }) {
   const [disabledClick, setDisabledClick] = useState(true)
 
   const goNextQuestion = async (answer, question) => {
-    const { data: response } = await axios.post(`${URL}/answer`, {
-      quizId: quiz.id,
-      questionId: question.id,
-      answer: answer
-    })
+    const response = await postAnswer(quiz.id, question.id, answer)
 
     const newResult = {
       userAnswer: answer,
@@ -32,14 +27,10 @@ export default function QuizBox({ quiz, restart }) {
     if (response.next !== null) setCurrentQuestion(response.next)
   }
 
-  const { isLoading, error } = useQuery(
-    'repoDataQuiz',
-    () => axios.get(`${URL}/start/${quiz.id}`).then(({ data }) => data),
-    {
-      onSuccess: data => setCurrentQuestion(data),
-      refetchOnWindowFocus: false
-    }
-  )
+  const { isLoading, error } = useQuery('repoDataQuiz', () => getNextQuestion(quiz.id), {
+    onSuccess: data => setCurrentQuestion(data),
+    refetchOnWindowFocus: false
+  })
 
   if (error) return <div className="error">An error has occurred: {error.message}</div>
 

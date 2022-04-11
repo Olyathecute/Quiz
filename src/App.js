@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
-import axios from 'axios'
 import QuizBox from './Module/QuizBox/QuizBox'
 import StartBox from './Module/StartBox/StartBox'
+import { getAllQuiz } from './requests'
 import './index.scss'
-import { URL } from './index'
 
 export default function App() {
   const [runningQuiz, setRunningQuiz] = useState()
 
-  useEffect(async () => {
-    const { data } = await axios.get(`${URL}/all`)
-  }, [])
-
-  const {
-    isLoading,
-    error,
-    data: quizzes
-  } = useQuery('repoData', () => axios.get(`${URL}/all`).then(({ data }) => data))
+  const { isLoading, error, data: quizzes } = useQuery('repoData', () => getAllQuiz())
 
   if (isLoading)
     return (
