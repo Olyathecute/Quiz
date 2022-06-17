@@ -1,21 +1,8 @@
-## Quiz with API data
-
-Quiz application using:
-
-- React hooks
-- react-query
-- react-beautiful-dnd
-- scss
-
-Enjoy the demo!
-
 ## How to start
 
 1. npm i
 2. node index.js
 3. npm start
-
----
 
 ## Demonstration
 
